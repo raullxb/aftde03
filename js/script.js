@@ -1,5 +1,6 @@
 const root = document.getElementById('root')
 const btnTema = document.getElementById('btnTema');
+const IMG_ERRO = 'imagens/erro.png';
 let lista = []
 
 
@@ -12,7 +13,7 @@ function Home() {
     let textoLegenda = 'Nenhuma imagem cadastrada';
 
     if (lista[0]) {
-        imgHTML = `<img id="principal" src="${lista[0].url}" alt="${lista[0].desc}" />`;
+        imgHTML = `<img id="principal" src="${lista[0].url}" alt="${lista[0].desc}" onerror="this.onerror=null; this.src='${IMG_ERRO}';" />`;
         textoLegenda = lista[0].desc;
     }
 
@@ -41,6 +42,9 @@ function carregarMiniaturas() {
         min.src = lista[i].url;
         min.alt = lista[i].desc;
 
+        min.onerror = function () {
+            this.src = IMG_ERRO;
+        };
         if (i === 0) {
             min.classList.add('selecionada');
         }
@@ -48,6 +52,9 @@ function carregarMiniaturas() {
 
         min.addEventListener('click', function () {
             imgPrincipal.src = lista[i].url;
+            imgPrincipal.onerror = function () {
+                this.src = IMG_ERRO;
+            };
             legenda.textContent = lista[i].desc;
 
 
